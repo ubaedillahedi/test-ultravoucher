@@ -1,0 +1,72 @@
+<script>
+  const arr = ['cook', 'save', 'taste', 'aves', 'vase', 'state', 'map']
+  let newArr = []
+  let checked = []
+
+  for (let i = 0; i < arr.length; i++) {
+    const item = arr[i]
+    let tmp = []
+    checked.push(item)
+    tmp.push(arr[i])
+    for (let j = 0; j < arr.length; j++) {
+      const jtem = arr[j]
+      if (jtem === item) continue
+      if (createObject(item, jtem)) {
+        tmp.push(jtem)
+      }
+    }
+    if (allowedAnagram(checked, item)) newArr.push(tmp)
+  }
+  console.log(newArr)
+
+  function allowedAnagram(arr, item) {
+    for (let i = 0; i < arr.length; i++) {
+      const element = arr[i]
+      if (createObject(element, item) && element !== item) {
+        return false
+      }
+    }
+    return true
+  }
+
+  function createObject(s1, s2) {
+    let s1Obj = {}
+    let s2Obj = {}
+
+    if (s1.length !== s2.length) {
+      return false
+    }
+
+    for (let i = 0; i < s1.length; i++) {
+      if (!s1Obj[s1[i]]) {
+        s1Obj[s1[i]] = 1
+      } else {
+        s1Obj[s1[i]]++
+      }
+    }
+
+    for (let i = 0; i < s2.length; i++) {
+      if (!s2Obj[s2[i]]) {
+        s2Obj[s2[i]] = 1
+      } else {
+        s2Obj[s2[i]]++
+      }
+    }
+    return isAnagram(s1Obj, s2Obj)
+  }
+
+  function isAnagram(a, b) {
+    const aKeys = Object.keys(a)
+    const bKeys = Object.keys(b)
+
+    if (aKeys.length != bKeys.length) return false
+
+    for (let i = 0; i < aKeys.length; i++) {
+      const value = aKeys[i]
+      if (a[value] != b[value]) {
+        return false
+      }
+    }
+    return true
+  }
+</script>
